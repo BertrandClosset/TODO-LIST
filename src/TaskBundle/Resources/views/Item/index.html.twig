@@ -1,0 +1,14 @@
+{% extends "TaskBundle::layout.html.twig" %}
+
+{% block title %}
+  oList - {{ parent() }}
+{% endblock %}
+
+{% block task_body %}
+
+  <h3>Task Lists</h3>
+
+  <a href="{{ path('task_add') }}"><button type="button" class="btn btn-primary">Create a new task</button></a>
+
+
+{% endblock %}

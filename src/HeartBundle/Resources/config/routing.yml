@@ -1,0 +1,3 @@
+heart_homepage:
+    path:     /
+    defaults: { _controller: HeartBundle:Home:index }

@@ -1,0 +1,11 @@
+heart:
+    resource: "@HeartBundle/Resources/config/routing.yml"
+    prefix:   /
+
+task:
+    resource: "@TaskBundle/Resources/config/routing.yml"
+    prefix:   /task
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /user

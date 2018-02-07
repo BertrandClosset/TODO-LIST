@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Todo List{% endblock %}</title>
+        {% block css %}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div id="menu" class ="col-md-3">
+                <ul>
+                    <li> <a href="{{ path('user_homepage') }}">Users</a></li>
+                    <li> <a href="{{ path('task_homepage') }}">Tasks</a></li>
+                </ul>
+                </div>
+                <div id="content" class="col-md-9">
+                {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    {% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,16 @@
+2 tables :
+
+- User
+  -login
+  -mdp
+  -role
+  -mail
+- Task
+    -title
+    -priority
+    -labels
+    -end date
+    -start date
+
+A task is linked to one user
+A user can have several tasks
