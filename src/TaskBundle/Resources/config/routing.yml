@@ -3,22 +3,22 @@ task_homepage:
     defaults: { _controller: TaskBundle:Item:index }
     
 task_view:
-    path:      /task/view/{id}
+    path:      /view/{id}
     defaults: { _controller: TaskBundle:Item:view }
     requirements:
         id: \d+
     
 task_add:
-    path:      /task/add
+    path:      /add
     defaults: { _controller: TaskBundle:Item:add }
 
 task_edit:
-    path:     /task/edit/{id}
+    path:     /edit/{id}
     defaults: { _controller: TaskBundle:Item:edit }
     requirements:
         id: \d+
 task_delete:
-    path:     /task/delete/{id}
+    path:     /delete/{id}
     defaults: { _controller: TaskBundle:Item:delete }
     requirements:
         id: \d+
