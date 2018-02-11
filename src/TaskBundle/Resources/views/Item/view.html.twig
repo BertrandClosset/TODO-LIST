@@ -1,11 +1,18 @@
 {% extends "TaskBundle::layout.html.twig" %}
 
 {% block title %}
-  Edit a task - {{ parent() }}
+  View Task - {{ parent() }}
 {% endblock %}
 
 {% block task_body %}
 
-  <h1>Welcome on Task {{ id }} view</h1>
+  <h2>Welcome on Task {{ task.id }} view</h2>
+
+  <div class="col-md-8">
+  <span>Task Title: {{ task.title }}</span>
+  <span>Task Description: {{ task.description }}</span>
+  <span>Task Endate: {{ task.endDate|date('d-m-Y') }}</span>
+  </div>
+  <a href= {{path('task_edit', {'id': task.id }) }} class="btn btn-primary">Edit</button>
 
 {% endblock %}

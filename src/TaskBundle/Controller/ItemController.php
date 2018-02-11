@@ -20,7 +20,8 @@ class ItemController extends Controller
     public function viewAction($id)
     {
        $em = $this->getDoctrine()->getManager();
-       return $this->render('TaskBundle:Item:view.html.twig', array('id'=>$id));
+       $item = $em->getRepository("TaskBundle:Item")->find($id);
+       return $this->render('TaskBundle:Item:view.html.twig', array('task'=>$item));
     }
 
     public function addAction(Request $request)
@@ -41,17 +42,23 @@ class ItemController extends Controller
 
     public function editAction($id, Request $request)
     {
-
-      if ($request->isMethod('POST')) {
+      $em = $this->getDoctrine()->getManager();
+      $item = $em->getRepository("TaskBundle:Item")->find($id);
+      $form = $this->get('form.factory')->create(ItemType::class, $item);
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $em->flush();
         $request->getSession()->getFlashBag()->add('message', 'Tâche modifiée correctement');
-        return $this->redirectToRoute('task_view', array('id'=>$id));
+        return $this->redirectToRoute('task_view', array('id'=>$item->getId()));
       } 
 
-      return $this->render('TaskBundle:Item:edit.html.twig',array('id'=>$id));
+      return $this->render('TaskBundle:Item:edit.html.twig',array(
+        'id'=>$id,
+        'form'=>$form->createView()
+      ));
     }
 
     public function deleteAction($id, Request $request)
     {
-        return $this->render('TaskBundle:Item:delete.html.twig',array('id'=>$id));
+        return $this->render('TaskBundle:Item:delete.html.twig',array('id'=>$id, 'form'=>$form->createView()));
     }
 }
