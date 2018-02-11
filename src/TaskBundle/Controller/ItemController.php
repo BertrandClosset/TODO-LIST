@@ -21,6 +21,9 @@ class ItemController extends Controller
     {
        $em = $this->getDoctrine()->getManager();
        $item = $em->getRepository("TaskBundle:Item")->find($id);
+       if ($item === null){
+        throw new NotFoundHttpException("The task with id ".$id." doesn't exist.");
+        }
        return $this->render('TaskBundle:Item:view.html.twig', array('task'=>$item));
     }
 
@@ -44,10 +47,13 @@ class ItemController extends Controller
     {
       $em = $this->getDoctrine()->getManager();
       $item = $em->getRepository("TaskBundle:Item")->find($id);
+      if ($item === null){
+        throw new NotFoundHttpException("The task with id ".$id." doesn't exist.");
+      }
       $form = $this->get('form.factory')->create(ItemType::class, $item);
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
         $em->flush();
-        $request->getSession()->getFlashBag()->add('message', 'Tâche modifiée correctement');
+        $request->getSession()->getFlashBag()->add('message', 'The task was succesfully edited.');
         return $this->redirectToRoute('task_view', array('id'=>$item->getId()));
       } 
 
@@ -59,6 +65,18 @@ class ItemController extends Controller
 
     public function deleteAction($id, Request $request)
     {
-        return $this->render('TaskBundle:Item:delete.html.twig',array('id'=>$id, 'form'=>$form->createView()));
+      $em = $this->getDoctrine()->getManager();
+      $item = $em->getRepository("TaskBundle:Item")->find($id);
+      if ($item === null){
+        throw new NotFoundHttpException("The task with id ".$id." doesn't exist.");
+      }
+      $form = $this->get('form.factory')->create();  
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $em->remove($item);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add('info', "The task was succesfully deleted.");
+        return $this->redirectToRoute('task_homepage');
+      }
+      return $this->render('TaskBundle:Item:delete.html.twig',array('task'=>$item, 'form'=>$form->createView()));
     }
-}
+  }

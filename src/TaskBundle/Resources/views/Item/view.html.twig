@@ -14,5 +14,6 @@
   <span>Task Endate: {{ task.endDate|date('d-m-Y') }}</span>
   </div>
   <a href= {{path('task_edit', {'id': task.id }) }} class="btn btn-primary">Edit</button>
+  <a href= {{path('task_delete', {'id': task.id }) }} class="btn btn-danger">Delete</button>
 
 {% endblock %}
