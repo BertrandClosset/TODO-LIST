@@ -4,6 +4,9 @@ namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -11,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var int
@@ -23,23 +26,40 @@ class User
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="login", type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\NotBlank()
      */
-    private $login;
+    private $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
+
+     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
+
     /**
      * @ORM\ManyToMany(targetEntity="TaskBundle\Entity\Item", cascade={"persist"})
      */
     private $items;
-
 
     /**
      * Get id
@@ -51,28 +71,13 @@ class User
         return $this->id;
     }
 
-    /**
-     * Set login
-     *
-     * @param string $login
-     *
-     * @return User
-     */
-    public function setLogin($login)
+     public function getUsername()
     {
-        $this->login = $login;
-
-        return $this;
+        return $this->username;
     }
-
-    /**
-     * Get login
-     *
-     * @return string
-     */
-    public function getLogin()
+     public function setUsername($username)
     {
-        return $this->login;
+        $this->username = $username;
     }
 
     /**
@@ -97,6 +102,37 @@ class User
     public function getEmail()
     {
         return $this->email;
+    }
+
+     public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
     }
     /**
      * Constructor
@@ -138,5 +174,9 @@ class User
     public function getItems()
     {
         return $this->items;
+    }
+    public function eraseCredentials()
+    {
+
     }
 }

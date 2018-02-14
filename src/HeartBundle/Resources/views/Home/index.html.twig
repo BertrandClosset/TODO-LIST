@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block body%}
-Hello World!
+{% for flashMessage in app.session.flashbag.get('message') %}
+
+    {{ flashMessage }}
+
+{% endfor %}
+<h1>Welcome to the TODO LIST Project</h1>
+<p>This project was just created to practive my personnal knowledge.</p>
+<a href="{{path('user_registration')}}" class="btn btn-primary">Register</a>
+<a href="{{path('login')}}" class="btn btn-primary">Log in</a>
 {% endblock %}
 

@@ -5,10 +5,12 @@ namespace TaskBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use TaskBundle\Entity\Item;
 use UserBundle\Entity\User;
 use \Datetime;
 use TaskBundle\Form\ItemType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ItemController extends Controller
 {
@@ -26,7 +28,9 @@ class ItemController extends Controller
         }
        return $this->render('TaskBundle:Item:view.html.twig', array('task'=>$item));
     }
-
+  /**
+   * @Security("has_role('ROLE_USER')")
+   */
     public function addAction(Request $request)
     {
       $item = new Item();

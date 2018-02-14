@@ -9,3 +9,18 @@ task:
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /user
+
+login:
+    path: /login
+    defaults:
+        _controller: UserBundle:Security:login
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
+user_registration:
+    path:     /register
+    defaults: { _controller: UserBundle:Registration:register }
