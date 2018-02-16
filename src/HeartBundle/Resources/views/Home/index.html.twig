@@ -5,10 +5,11 @@
 {% endblock %}
 
 {% block body%}
-{% for flashMessage in app.session.flashbag.get('message') %}
-
-    {{ flashMessage }}
-
+{% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="alert alert-success fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ flashMessage }}
+     </div>
 {% endfor %}
 <h1>Welcome to the TODO LIST Project</h1>
 <p>This project was just created to practive my personnal knowledge.</p>

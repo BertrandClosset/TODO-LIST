@@ -35,7 +35,7 @@ class RegistrationController extends Controller
 
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
-            $request->getSession()->getFlashBag()->add('message', 'User successfully created');
+            $request->getSession()->getFlashBag()->add('success', 'User successfully created');
 
             return $this->redirectToRoute('heart_homepage');
         }
