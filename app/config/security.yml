@@ -18,10 +18,21 @@ security:
                 # manager_name: customer
 
   firewalls:
+      main_login:
+        # Cette expression régulière permet de prendre /login (mais pas /login_check !)
+          pattern:    ^/login$
+          anonymous: true # On autorise alors les anonymes sur ce pare-feu
       main:
-          pattern:    ^/(task|user)
-          http_basic: ~
-          provider: our_db_provider
-      homepage:
-          pattern:   ^/
+          pattern:    ^/
           anonymous: ~
+          provider: our_db_provider
+          anonymous: ~
+          form_login:
+              login_path: login
+              check_path: login_check
+          logout:
+              path:       logout
+              target:     login
+     # homepage:
+     #     pattern:   ^/
+     #     anonymous: ~
